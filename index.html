@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hearthly - 打造完美的家</title>
+<style>
+    /* 全局样式 */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        background-color: #ffffff;
+        color: #333333;
+        transition: background-color 2s, color 2s;
+        overflow-x: hidden;
+    }
+
+    /* 第一阶段：普通营销网站 */
+    .section {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+        position: relative;
+    }
+
+    h1 { font-size: 3rem; margin-bottom: 10px; }
+    p { font-size: 1.2rem; color: #666; max-width: 600px; }
+    .btn {
+        margin-top: 20px;
+        padding: 12px 30px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .btn:hover { background-color: #45a049; }
+
+    /* 第二阶段：开始变得奇怪 (由JS动态添加) */
+    .weird-mode {
+        background-color: #1a1a1a !important;
+        color: #8b0000 !important;
+        transition: background-color 2s, color 2s;
+    }
+    .weird-mode p { color: #5c0000; }
+    .weird-mode h1 {
+        font-family: 'Courier New', Courier, monospace;
+        animation: shake 0.5s infinite;
+    }
+
+    /* 第三阶段：极其恐怖 (由JS动态添加) */
+    .scary-mode {
+        background-color: #000000 !important;
+        color: #ff0000 !important;
+        animation: screenShake 0.1s infinite;
+    }
+    .scary-mode h1 {
+        font-size: 5rem;
+        text-transform: uppercase;
+        letter-spacing: 10px;
+        animation: glitch 0.2s infinite;
+    }
+    .scary-mode p {
+        color: #ff0000;
+        font-size: 2rem;
+        font-style: italic;
+    }
+
+    /* 恐怖元素：隐藏的眼睛/脸 */
+    #jumpscare {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        background-color: black;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+    #jumpscare img {
+        width: 80%;
+        max-width: 500px;
+        animation: zoomIn 0.5s forwards;
+    }
+
+    /* 动画效果 */
+    @keyframes shake {
+        0% { transform: translate(1px, 1px) rotate(0deg); }
+        10% { transform: translate(-1px, -2px) rotate(-1deg); }
+        20% { transform: translate(-3px, 0px) rotate(1deg); }
+        30% { transform: translate(3px, 2px) rotate(0deg); }
+        40% { transform: translate(1px, -1px) rotate(1deg); }
+        50% { transform: translate(-1px, 2px) rotate(-1deg); }
+        60% { transform: translate(-3px, 1px) rotate(0deg); }
+        70% { transform: translate(3px, 1px) rotate(-1deg); }
+        80% { transform: translate(-1px, -1px) rotate(1deg); }
+        90% { transform: translate(1px, 2px) rotate(0deg); }
+        100% { transform: translate(1px, -2px) rotate(-1deg); }
+    }
+
+    @keyframes screenShake {
+        0% { transform: translate(0, 0); }
+        25% { transform: translate(2px, 2px); }
+        50% { transform: translate(-2px, -2px); }
+        75% { transform: translate(2px, -2px); }
+        100% { transform: translate(-2px, 2px); }
+    }
+
+    @keyframes glitch {
+        0% { text-shadow: 2px 0 red, -2px 0 blue; }
+        50% { text-shadow: -2px 0 red, 2px 0 blue; }
+        100% { text-shadow: 2px 0 red, -2px 0 blue; }
+    }
+
+    @keyframes zoomIn {
+        0% { transform: scale(0.1); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* 滚动条隐藏，增强沉浸感 */
+    ::-webkit-scrollbar { width: 0px; background: transparent; }
+</style>
+</head>
+<body>
+
+    <!-- 第一屏：正常 -->
+    <div class="section" id="sec1">
+        <h1>Hearthly</h1>
+        <p>为您打造温馨、舒适、智能的现代家居体验。让科技融入生活，让家更懂你。</p>
+        <button class="btn">立即开始</button>
+        <p style="margin-top: 50px; font-size: 0.9rem;">↓ 向下滚动了解更多 ↓</p>
+    </div>
+
+    <!-- 第二屏：奇怪 -->
+    <div class="section" id="sec2">
+        <h1>你还在看吗？</h1>
+        <p>我们的墙壁会呼吸。我们的地板在倾听。请不要停止滚动。</p>
+    </div>
+
+    <!-- 第三屏：恐怖 -->
+    <div class="section" id="sec3">
+        <h1>它在看着你</h1>
+        <p>快逃。</p>
+    </div>
+
+    <!-- 惊吓层 -->
+    <div id="jumpscare">
+        <!-- 这里使用一个SVG图形模拟恐怖的脸，避免加载外部图片失败 -->
+        <svg width="400" height="400" viewBox="0 0 100 100" style="fill: #ff0000;">
+            <circle cx="50" cy="50" r="45" fill="#000" stroke="#ff0000" stroke-width="2"/>
+            <ellipse cx="35" cy="40" rx="10" ry="15" fill="#ff0000"/>
+            <ellipse cx="65" cy="40" rx="10" ry="15" fill="#ff0000"/>
+            <path d="M 30 70 Q 50 90 70 70" stroke="#ff0000" stroke-width="5" fill="none"/>
+            <circle cx="35" cy="40" r="3" fill="#000"/>
+            <circle cx="65" cy="40" r="3" fill="#000"/>
+        </svg>
+    </div>
+
+<script>
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        const maxScroll = docum
